@@ -1,0 +1,24 @@
+docker run -d -p 4444:4444 --shm-size=2g selenium/standalone-chrome:3.141.59-20210929
+
+How to Setup Selenium Grid?
+ 🟢Step 1 - Download the Selenium Server
+ 🟢Step 2 - Run Server as Hub Role
+      java -jar selenium-server-4.0.0.jar hub
+      http://192.168.0.106:4444/grid/console
+      http://localhost:4444/grid/console
+ 🟢Step 3 - Connect Node in Same Network.
+      java -jar selenium-server-4.0.0.jar node --hub http://192.168.0.106:4444/grid/register
+ 🟢Step 4 :  Verify the http://192.168.1.2:4444/grid/console
+
+ Commands for docker
+🟢docker-compose -f docker-compose.yml up
+🟢pytest test_HomePage.py
+
+
+
+
+pytest -v -s --alluredir="C:\Users\User\Desktop\test-python-docker_selenium_master\reports" Tests\test_HomePage.py
+
+ copy the path of the report folder
+    C:\Users\User\Desktop\test-python-docker_selenium_master\reports
+    in cmd run allure serve and the path location

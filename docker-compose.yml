@@ -1,0 +1,32 @@
+version: '3.3'
+
+services:
+  chrome:
+    image: selenium/node-chrome:4.1.0-20211123
+    shm_size: 2gb # flag --shm-size=2g to use the host's shared memory.
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub # The Event Bus serves as a communication path between the Nodes, Distributor, New Session Queue, and Session Map.
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    deploy:
+      replicas: 1
+    entrypoint: bash -c 'SE_OPTS="--host $$HOSTNAME" /opt/bin/entry_point.sh'
+
+
+  firefox:
+    image: selenium/node-firefox:4.1.0-20211123
+    shm_size: 2gb
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    deploy:
+      replicas: 1
+    entrypoint: bash -c 'SE_OPTS="--host $$HOSTNAME" /opt/bin/entry_point.sh'
+
+  selenium-hub:
+    image: selenium/hub:4.1.0-20211123
+    ports:
+      - "4444:4444"
+      - "4443:4443"
+      - "4442:4442"
